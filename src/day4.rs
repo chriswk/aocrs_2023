@@ -50,8 +50,11 @@ pub fn solve_part1(input: &[Card]) -> u32 {
     input
         .iter()
         .map(|c| {
-            let intersect: HashSet<&u32> = c.own.intersection(&c.winning).collect();
-            2_u32.pow(intersect.len() as u32 - 1)
+            let intersect = c.own.intersection(&c.winning).count();
+            if intersect == 0 {
+                return 0;
+            }
+            1 << (intersect - 1)
         })
         .sum()
 }
