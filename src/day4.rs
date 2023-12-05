@@ -104,6 +104,14 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
         let input = generator(input);
         assert_eq!(solve_part1(&input), 13)
     }
+
+    #[test]
+    pub fn part1() {
+        assert_eq!(
+            solve_part1(&generator(include_str!("../input/2023/day4.txt"))),
+            15205
+        );
+    }
     #[test]
     pub fn can_handle_test_input_part2() {
         let input = r#"
@@ -117,5 +125,12 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
         .trim();
         let input = generator(input);
         assert_eq!(solve_part2(&input), 30);
+    }
+    #[test]
+    pub fn part2() {
+        assert_eq!(
+            solve_part2(&generator(include_str!("../input/2023/day4.txt"))),
+            6189740
+        );
     }
 }
