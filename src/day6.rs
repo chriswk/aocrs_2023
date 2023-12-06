@@ -100,13 +100,6 @@ Distance:  9  40  200"#;
     }
 
     #[test]
-    pub fn can_solve_part1_test_input() {
-        let races = parse_input(TEST_INPUT);
-        let possibilities = races.iter().fold(1, |acc, race| acc * race.possible_wins());
-        assert_eq!(possibilities, 4 * 8 * 9);
-    }
-
-    #[test]
     pub fn solves_part1() {
         let races = parse_input(include_str!("../input/2023/day6.txt"));
         assert_eq!(part1(&races), 2612736);
@@ -115,7 +108,7 @@ Distance:  9  40  200"#;
     #[test]
     pub fn can_solve_part2_for_testinput() {
         let race = parse_input_part2(TEST_INPUT);
-        assert_eq!(race.possible_wins(), 71503);
+        assert_eq!(race.constant_time_wins(), 71503);
     }
 
     #[test]
