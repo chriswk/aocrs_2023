@@ -6,11 +6,13 @@ pub struct Race {
 }
 
 impl Race {
-    pub fn possible_wins(&self) -> usize {
-        (0..self.duration)
-            .map(|t| (self.duration - t) * t)
-            .filter(|d| *d > self.record)
-            .count()
+    pub fn constant_time_wins(&self) -> u64 {
+        let d = self.duration as f64 / 2.0;
+        let d_2 = d * d;
+        let root = (d_2 - self.record as f64).sqrt();
+        let from_dur = (d - root) as u64;
+        let to_dur = (d + root) as u64;
+        to_dur - from_dur
     }
 }
 
@@ -75,13 +77,15 @@ fn parse_input_part2(input: &str) -> Race {
 }
 
 #[aoc(day6, part1)]
-pub fn part1(input: &[Race]) -> usize {
-    input.iter().fold(1, |acc, race| acc * race.possible_wins())
+pub fn part1(input: &[Race]) -> u64 {
+    input
+        .iter()
+        .fold(1, |acc, race| acc * race.constant_time_wins())
 }
 
 #[aoc(day6, part2)]
-pub fn part2(input: &Race) -> usize {
-    input.possible_wins()
+pub fn part2(input: &Race) -> u64 {
+    input.constant_time_wins()
 }
 
 #[cfg(test)]
