@@ -5,12 +5,10 @@ fn parse(input: &str) -> Vec<String> {
 }
 
 fn hash(input: &String) -> usize {
-    input.chars().into_iter().fold(0, |acc, c| {
-        let newval = acc + c as usize;
-        let newval = newval * 17;
-        let newval = newval % 256;
-        newval
-    })
+    input
+        .chars()
+        .into_iter()
+        .fold(0, |acc, c| ((acc + c as usize) * 17) % 256)
 }
 
 #[aoc(day15, part1)]
