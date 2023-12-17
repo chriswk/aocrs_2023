@@ -46,6 +46,7 @@ version = "0.1.0"
 dependencies = [
  "aoc-runner",
  "aoc-runner-derive",
+ "glam",
  "num",
  "regex",
 ]
@@ -55,6 +56,12 @@ name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
+
+[[package]]
+name = "glam"
+version = "0.24.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b5418c17512bdf42730f9032c74e1ae39afc408745ebb2acf72fbc4691c17945"
 
 [[package]]
 name = "itoa"
