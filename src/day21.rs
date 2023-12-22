@@ -11,10 +11,10 @@ fn parse(input: &str) -> (Grid, Point) {
     let grid: Grid = input
         .lines()
         .enumerate()
-        .map(move |(y, line)| {
+        .map(move |(_y, line)| {
             line.chars()
                 .enumerate()
-                .map(move |(x, c)| c)
+                .map(move |(_x, c)| c)
                 .collect::<Vec<_>>()
         })
         .collect();
@@ -46,8 +46,8 @@ fn grid_contains(grid: &Grid, p: Point) -> bool {
 }
 
 fn visit(grid: &Grid, start: Point, max_steps: usize) -> usize {
-    let max_x = grid[0].len();
-    let max_y = grid.len();
+    let _max_x = grid[0].len();
+    let _max_y = grid.len();
     let mut queue = VecDeque::new();
     let mut visited = HashSet::<Point>::new();
     visited.insert(start);
@@ -99,10 +99,10 @@ fn predict_perimeter(
     past_perims_offsets: &[usize],
 ) -> usize {
     let term2 = past_perims_offsets[cur_count % 131];
-    let predicted_perim = ((cur_count / 131) - 1) * (past_perims[131] + term2 as usize)
-        + past_perims[cur_count % 131 + 131];
+    
 
-    predicted_perim
+    ((cur_count / 131) - 1) * (past_perims[131] + term2)
+        + past_perims[cur_count % 131 + 131]
 }
 fn visit_infinite(grid: &Grid, start: Point, max_steps: usize) -> usize {
     let mut queue = VecDeque::new();
@@ -131,25 +131,21 @@ fn visit_infinite(grid: &Grid, start: Point, max_steps: usize) -> usize {
                 past_perims_offset.push(offset);
             } else {
                 let term2 = past_perims_offset[cur_count % 131];
-                let predicted_perim = ((cur_count / 131) - 1) * (past_perims[131] + term2 as usize)
+                let predicted_perim = ((cur_count / 131) - 1) * (past_perims[131] + term2)
                     + past_perims[cur_count % 131 + 131];
-                let offset = gardens as isize - predicted_perim as isize;
+                let _offset = gardens as isize - predicted_perim as isize;
                 break;
             }
             if cur_count % 131 <= 2 {
-                let mut perim_delta = 0;
                 let mut inter_delta = 0;
                 let mut prev_inter_delta = 0;
                 if cur_count >= 131 {
-                    perim_delta =
-                        gardens as isize - *perim_cache.get(&(cur_count - 131)).unwrap() as isize;
                     inter_delta = interior_gardens as isize
                         - *reached_cache.get(&(cur_count - 131)).unwrap() as isize;
                 }
                 if cur_count >= 262 {
                     prev_inter_delta = *reached_cache.get(&(cur_count - 262)).unwrap() as isize;
                 }
-                let idd = inter_delta - prev_inter_delta;
             }
             reached_cache.insert(cur_count, total_gardens);
             perim_cache.insert(cur_count, gardens);

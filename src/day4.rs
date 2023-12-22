@@ -24,8 +24,7 @@ pub fn generator(input: &str) -> Vec<Card> {
                 .map(|f| f.split('|'))
                 .unwrap()
                 .collect::<Vec<_>>();
-            let winning = numbers
-                .get(0)
+            let winning = numbers.first()
                 .unwrap()
                 .split_whitespace()
                 .map(|x| x.parse::<u32>().unwrap())
@@ -65,11 +64,10 @@ pub fn solve_part2(input: &[Card]) -> u32 {
     let max_id = input.iter().map(|c| c.id).max().unwrap();
     for card in input {
         let winning = card.own.intersection(&card.winning).count();
-        let copies_of_me = copies
+        let copies_of_me = *copies
             .entry(card.id as u32)
             .and_modify(|c| *c += 1)
-            .or_insert(1)
-            .clone();
+            .or_insert(1);
         if winning == 0 {
             continue;
         }
@@ -79,8 +77,8 @@ pub fn solve_part2(input: &[Card]) -> u32 {
         for i in start_index..=end_index {
             copies
                 .entry(i as u32)
-                .and_modify(|c| *c += copies_of_me.clone())
-                .or_insert(copies_of_me.clone());
+                .and_modify(|c| *c += copies_of_me)
+                .or_insert(copies_of_me);
         }
     }
     copies.values().sum()

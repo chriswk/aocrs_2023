@@ -21,13 +21,12 @@ fn parse(input: &str) -> Grid {
             .lines()
             .filter(|l| !l.is_empty())
             .enumerate()
-            .map(|(y, l)| {
+            .flat_map(|(y, l)| {
                 l.trim()
                     .chars()
                     .enumerate()
                     .map(move |(x, c)| ((x as isize, y as isize), c))
             })
-            .flatten()
             .collect::<Field>(),
         height: input.lines().count(),
         width: input.lines().next().unwrap().len(),

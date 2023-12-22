@@ -10,7 +10,7 @@ fn parse(input: &str) -> Vec<Sequence> {
 }
 
 fn find_next_values(mut sequence: Sequence) -> isize {
-    let mut last_numbers = vec![sequence.last().unwrap().clone()];
+    let mut last_numbers = vec![*sequence.last().unwrap()];
     loop {
         let new_sequence: Vec<_> = sequence.windows(2).map(|s| s[1] - s[0]).collect();
 
@@ -18,20 +18,20 @@ fn find_next_values(mut sequence: Sequence) -> isize {
             break;
         }
         sequence = new_sequence;
-        last_numbers.push(sequence.last().unwrap().clone());
+        last_numbers.push(*sequence.last().unwrap());
     }
     last_numbers.iter().sum()
 }
 
 fn find_previous_values(mut sequence: Sequence) -> isize {
-    let mut first_numbers = vec![sequence.first().unwrap().clone()];
+    let mut first_numbers = vec![*sequence.first().unwrap()];
     loop {
         let new_sequence: Vec<_> = sequence.windows(2).map(|s| s[1] - s[0]).collect();
         if new_sequence.iter().all(|n| n.is_zero()) {
             break;
         }
         sequence = new_sequence;
-        first_numbers.push(sequence.first().unwrap().clone());
+        first_numbers.push(*sequence.first().unwrap());
     }
     first_numbers.iter().rev().fold(0, |acc, n| n - acc)
 }

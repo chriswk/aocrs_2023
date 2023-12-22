@@ -80,7 +80,6 @@ pub fn solve_part1((seeds, maps): &SeedToLocations) -> u64 {
         })
         .min()
         .unwrap()
-        .clone()
 }
 
 #[aoc(day5, part2)]

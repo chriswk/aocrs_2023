@@ -1,19 +1,18 @@
 use aoc_runner_derive::{aoc, aoc_generator};
 #[aoc_generator(day15)]
 fn parse(input: &str) -> Vec<String> {
-    input.split(",").map(|f| f.to_owned()).collect()
+    input.split(',').map(|f| f.to_owned()).collect()
 }
 
-fn hash(input: &String) -> usize {
+fn hash(input: &str) -> usize {
     input
         .chars()
-        .into_iter()
         .fold(0, |acc, c| ((acc + c as usize) * 17) % 256)
 }
 
 #[aoc(day15, part1)]
 fn part1(input: &[String]) -> usize {
-    input.into_iter().map(hash).sum()
+    input.iter().map(|f| hash(f.as_str())).sum()
 }
 
 #[aoc(day15, part2)]
@@ -21,7 +20,7 @@ fn part2(input: &[String]) -> usize {
     let mut boxes: Vec<Vec<(String, usize)>> = vec![vec![]; 256];
     for step in input {
         if step.contains('-') {
-            let label = step.replace("-", "");
+            let label = step.replace('-', "");
             let n = hash(&label);
             let new_box = boxes[n]
                 .iter()
@@ -32,7 +31,7 @@ fn part2(input: &[String]) -> usize {
         } else {
             let label_and_focus = step.split('=').collect::<Vec<_>>();
             let label = label_and_focus[0];
-            let n = hash(&label.to_owned());
+            let n = hash(label);
             let focal_length = label_and_focus[1].parse::<usize>().unwrap();
             let existing = boxes[n].iter().any(|(l, _)| l == label);
             if existing {
@@ -55,12 +54,12 @@ fn part2(input: &[String]) -> usize {
     boxes
         .iter()
         .enumerate()
-        .fold(0 as usize, |total, (box_idx, lens_box)| {
+        .fold(0_usize, |total, (box_idx, lens_box)| {
             total
                 + lens_box
                     .iter()
                     .enumerate()
-                    .fold(0 as usize, |acc, (slot, (_, focal_length))| {
+                    .fold(0_usize, |acc, (slot, (_, focal_length))| {
                         acc + (box_idx + 1) * (slot + 1) * focal_length
                     })
         })
@@ -74,7 +73,7 @@ mod tests {
 
     #[test]
     fn hasher_works_as_described() {
-        assert_eq!(hash(&"HASH".to_owned()), 52);
+        assert_eq!(hash("HASH"), 52);
     }
 
     #[test]

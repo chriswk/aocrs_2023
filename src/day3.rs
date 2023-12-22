@@ -12,7 +12,7 @@ pub fn input_generator(input: &str) -> HashMap<Point, Gear> {
     let mut gears: HashMap<Point, Gear> = HashMap::new();
     for (y, line) in input.lines().enumerate() {
         for (x, symbol) in line.chars().enumerate() {
-            if symbol != '.' && !symbol.is_digit(10) {
+            if symbol != '.' && !symbol.is_ascii_digit() {
                 gears.entry((x, y)).or_insert(Gear {
                     symbol,
                     part_numbers: vec![],
@@ -57,7 +57,6 @@ pub fn input_generator(input: &str) -> HashMap<Point, Gear> {
 pub fn solve_part1(input: &HashMap<Point, Gear>) -> u32 {
     input
         .values()
-        .into_iter()
         .map(|v| v.part_numbers.iter().sum::<u32>())
         .sum()
 }
@@ -66,7 +65,6 @@ pub fn solve_part1(input: &HashMap<Point, Gear>) -> u32 {
 pub fn solve_part2(input: &HashMap<Point, Gear>) -> u64 {
     input
         .values()
-        .into_iter()
         .filter(|g| g.symbol == '*' && g.part_numbers.len() == 2)
         .map(|g| g.part_numbers.iter().fold(1, |acc, n| acc * (*n as u64)))
         .sum()

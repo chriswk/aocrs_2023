@@ -188,8 +188,7 @@ fn parse(input: &str) -> Vec<Play<CamelCard>> {
         .lines()
         .map(|p| {
             let cards = p
-                .split(" ")
-                .nth(0)
+                .split(' ').next()
                 .unwrap()
                 .chars()
                 .map(|c| CamelCard::from(&c))
@@ -197,7 +196,7 @@ fn parse(input: &str) -> Vec<Play<CamelCard>> {
             let hand = Hand {
                 cards: [cards[0], cards[1], cards[2], cards[3], cards[4]],
             };
-            let bid = p.split(" ").nth(1).unwrap().parse::<u128>().unwrap();
+            let bid = p.split(' ').nth(1).unwrap().parse::<u128>().unwrap();
             Play { hand, bid }
         })
         .collect()
@@ -209,8 +208,7 @@ fn parse_with_jokers(input: &str) -> Vec<Play<JokerCamelCard>> {
         .lines()
         .map(|p| {
             let cards = p
-                .split(" ")
-                .nth(0)
+                .split(' ').next()
                 .unwrap()
                 .chars()
                 .map(|c| JokerCamelCard::from(&c))
@@ -218,7 +216,7 @@ fn parse_with_jokers(input: &str) -> Vec<Play<JokerCamelCard>> {
             let hand = Hand {
                 cards: [cards[0], cards[1], cards[2], cards[3], cards[4]],
             };
-            let bid = p.split(" ").nth(1).unwrap().parse::<u128>().unwrap();
+            let bid = p.split(' ').nth(1).unwrap().parse::<u128>().unwrap();
             Play { hand, bid }
         })
         .collect()
@@ -268,7 +266,7 @@ QQQJA 483"#;
 
     #[test]
     fn part2_example() {
-        assert_eq!(part2(&parse_with_jokers(&EXAMPLE)), 5905);
+        assert_eq!(part2(&parse_with_jokers(EXAMPLE)), 5905);
     }
 
     #[test]

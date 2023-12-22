@@ -2,7 +2,7 @@ use aoc_runner_derive::{aoc, aoc_generator};
 
 pub type Springs = (String, Vec<usize>);
 #[aoc_generator(day12)]
-fn parse<'a>(input: &str) -> Vec<Springs> {
+fn parse(input: &str) -> Vec<Springs> {
     input
         .lines()
         .map(|line| {
@@ -53,7 +53,7 @@ fn count_arrangements(pattern: &str, counts: &[usize]) -> usize {
 fn part1(input: &[Springs]) -> usize {
     input
         .iter()
-        .map(|(pattern, counts)| count_arrangements(&pattern, counts))
+        .map(|(pattern, counts)| count_arrangements(pattern, counts))
         .sum()
 }
 

@@ -82,12 +82,7 @@ fn find_pipes(grid: &Grid) -> Vec<Point> {
     let mut pipes = vec![s];
     while grid[curr.1][curr.0] != 'S' {
         let (c1, c2) = connections(grid, curr).unwrap();
-        let next;
-        if c1 == *pipes.last().unwrap() {
-            next = c2;
-        } else {
-            next = c1;
-        }
+        let next = if c1 == *pipes.last().unwrap() { c2 } else { c1 };
         pipes.push(curr);
         curr = next;
     }
@@ -126,8 +121,7 @@ fn mark_grid(grid: Grid) -> (Grid, HashSet<Point>) {
     let mut marked_grid = grid;
     let mut previous = (starting_point.0 as i64, starting_point.1 as i64);
     let mut points_to_mark = vec![];
-    for i in 0..pipes.len() {
-        let segment = pipes[i];
+    for segment in pipes {
         let curr = (segment.0 as i64, segment.1 as i64);
         match (curr.0 - previous.0, curr.1 - previous.1) {
             (1, 0) => {

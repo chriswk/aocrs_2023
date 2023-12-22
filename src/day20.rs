@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet, VecDeque};
 
-use aoc_runner_derive::{aoc, aoc_generator};
+use aoc_runner_derive::{aoc};
 use num::Integer;
 
 #[aoc(day20, part1)]
@@ -24,7 +24,7 @@ fn part1(input: &str) -> usize {
             match g.get(n) {
                 Some((node_type, _)) => {
                     if node_type == &b'&' {
-                        conjunctions.entry(n).or_default().insert(&node, false);
+                        conjunctions.entry(n).or_default().insert(node, false);
                     }
                 }
                 None => continue,
@@ -33,7 +33,7 @@ fn part1(input: &str) -> usize {
     }
     let mut lows = 0;
     let mut highs = 0;
-    for t in 0..1000 {
+    for _t in 0..1000 {
         let mut q = VecDeque::from_iter([("broadcaster", "button", false)]);
         while let Some((node, previous, high)) = q.pop_front() {
             if high {
@@ -93,7 +93,7 @@ fn part2(input: &str) -> usize {
             match g.get(n) {
                 Some((node_type, _)) => {
                     if node_type == &b'&' {
-                        conjunctions.entry(n).or_default().insert(&node, false);
+                        conjunctions.entry(n).or_default().insert(node, false);
                     }
                 }
                 None => continue,

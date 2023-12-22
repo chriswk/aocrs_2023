@@ -24,7 +24,6 @@ pub fn parse_input(input: &str) -> Vec<Race> {
         .unwrap()
         .strip_prefix("Time: ")
         .unwrap()
-        .trim()
         .split_whitespace()
         .map(|s| s.parse().unwrap())
         .collect::<Vec<u64>>();
@@ -33,7 +32,6 @@ pub fn parse_input(input: &str) -> Vec<Race> {
         .unwrap()
         .strip_prefix("Distance: ")
         .unwrap()
-        .trim()
         .split_whitespace()
         .map(|s| s.parse().unwrap())
         .collect::<Vec<u64>>();
@@ -55,7 +53,6 @@ fn parse_input_part2(input: &str) -> Race {
         .unwrap()
         .strip_prefix("Time: ")
         .unwrap()
-        .trim()
         .split_whitespace()
         .fold("".to_string(), |acc, s| acc + s)
         .parse()
@@ -65,7 +62,6 @@ fn parse_input_part2(input: &str) -> Race {
         .unwrap()
         .strip_prefix("Distance: ")
         .unwrap()
-        .trim()
         .split_whitespace()
         .fold("".to_string(), |acc, s| acc + s)
         .parse()

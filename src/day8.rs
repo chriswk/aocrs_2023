@@ -7,7 +7,7 @@ pub type Network = HashMap<String, (String, String)>;
 
 #[aoc_generator(day8)]
 fn parse(input: &str) -> (String, Network) {
-    let instructions = input.lines().nth(0).unwrap().chars().collect();
+    let instructions = input.lines().next().unwrap().chars().collect();
     let pattern = Regex::new(r"(.+) = \((.+), (.+)\)").unwrap();
     let nodes = input
         .lines()
@@ -33,12 +33,7 @@ fn walk_network(
         .keys()
         .filter(|node| select_start_nodes(node))
         .map(|current_node| {
-            calculate_steps(
-                instructions,
-                &network,
-                is_end_node,
-                &mut current_node.clone(),
-            )
+            calculate_steps(instructions, network, is_end_node, current_node.as_str())
         })
         .reduce(lcm)
         .unwrap()
@@ -51,8 +46,8 @@ fn calculate_steps<'a>(
     mut current_node: &'a str,
 ) -> usize {
     let mut steps = 0;
-    for step in instructions.chars().into_iter().cycle() {
-        if is_end_node(&current_node) {
+    for step in instructions.chars().cycle() {
+        if is_end_node(current_node) {
             return steps;
         }
         steps += 1;
@@ -79,8 +74,8 @@ fn part2((instructions, network): &(String, Network)) -> usize {
     walk_network(
         instructions,
         network,
-        |n| n.ends_with("A"),
-        |n| n.ends_with("Z"),
+        |n| n.ends_with('A'),
+        |n| n.ends_with('Z'),
     )
 }
 

@@ -3,7 +3,7 @@ use std::{
     ops::{IndexMut, Range},
 };
 
-use aoc_runner_derive::{aoc, aoc_generator};
+use aoc_runner_derive::aoc;
 use nom::{
     branch::alt,
     bytes::complete::{tag, take_while1},
@@ -15,8 +15,8 @@ use nom::{
 
 fn parse_integer(input: &str) -> IResult<&str, usize> {
     map_res(
-        recognize(take_while1(|ch: char| ch.is_digit(10))),
-        |out: &str| usize::from_str_radix(out, 10),
+        recognize(take_while1(|ch: char| ch.is_ascii_digit())),
+        |out: &str| out.parse::<usize>(),
     )(input)
 }
 
@@ -401,7 +401,6 @@ impl Part {
     }
 }
 
-
 #[aoc(day19, part1)]
 fn part1(input: &str) -> usize {
     let (remaining, workflows) = WorkflowCollection::parse(input).unwrap();
@@ -420,9 +419,11 @@ fn part2(input: &str) -> usize {
     let (_, workflows) = WorkflowCollection::parse(input).unwrap();
     let starting_ranges = PartRange::default();
     let final_ranges = workflows.apply_ranges(starting_ranges);
-    final_ranges.iter().filter(|(_, outcome)| matches!(outcome, FinalOutcome::Accept)).fold(0, |acc, (range, _)| acc + range.count_num_combos())
+    final_ranges
+        .iter()
+        .filter(|(_, outcome)| matches!(outcome, FinalOutcome::Accept))
+        .fold(0, |acc, (range, _)| acc + range.count_num_combos())
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -454,7 +455,7 @@ hdj{m>838:A,pv}
 
     #[test]
     fn solves_part1() {
-        assert_eq!(part1(INPUT),331208)
+        assert_eq!(part1(INPUT), 331208)
     }
 
     #[test]

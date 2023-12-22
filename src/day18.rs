@@ -61,7 +61,7 @@ fn lava(moves: &[Move]) -> i64 {
         area += determinant(position, previous);
         perimeter += amount as i64;
     }
-    ((area / 2).abs() + (perimeter / 2+ 1)) as i64 
+    (area / 2).abs() + (perimeter / 2+ 1) 
 }
 
 fn determinant(a: IVec2, b: IVec2) -> i64 {
