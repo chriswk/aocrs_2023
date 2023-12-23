@@ -1,3 +1,4 @@
+mod day23;
 mod day22;
 use aoc_runner_derive::aoc_lib;
 

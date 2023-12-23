@@ -99,10 +99,8 @@ fn predict_perimeter(
     past_perims_offsets: &[usize],
 ) -> usize {
     let term2 = past_perims_offsets[cur_count % 131];
-    
 
-    ((cur_count / 131) - 1) * (past_perims[131] + term2)
-        + past_perims[cur_count % 131 + 131]
+    ((cur_count / 131) - 1) * (past_perims[131] + term2) + past_perims[cur_count % 131 + 131]
 }
 fn visit_infinite(grid: &Grid, start: Point, max_steps: usize) -> usize {
     let mut queue = VecDeque::new();
@@ -135,17 +133,6 @@ fn visit_infinite(grid: &Grid, start: Point, max_steps: usize) -> usize {
                     + past_perims[cur_count % 131 + 131];
                 let _offset = gardens as isize - predicted_perim as isize;
                 break;
-            }
-            if cur_count % 131 <= 2 {
-                let mut inter_delta = 0;
-                let mut prev_inter_delta = 0;
-                if cur_count >= 131 {
-                    inter_delta = interior_gardens as isize
-                        - *reached_cache.get(&(cur_count - 131)).unwrap() as isize;
-                }
-                if cur_count >= 262 {
-                    prev_inter_delta = *reached_cache.get(&(cur_count - 262)).unwrap() as isize;
-                }
             }
             reached_cache.insert(cur_count, total_gardens);
             perim_cache.insert(cur_count, gardens);
