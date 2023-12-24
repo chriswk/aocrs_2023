@@ -39,6 +39,53 @@ impl Point {
     }
 }
 
+#[derive(Debug, Copy, Clone, Default)]
+pub struct Point3WithVel {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+    pub dx: f64,
+    pub dy: f64,
+    pub dz: f64,
+}
+
+impl Point3WithVel {
+    pub fn from_vec(v: Vec<f64>) -> Point3WithVel {
+        assert_eq!(v.len(), 6);
+        Point3WithVel {
+            x: v[0],
+            y: v[1],
+            z: v[2],
+            dx: v[3],
+            dy: v[4],
+            dz: v[5],
+        }
+    }
+
+    pub fn from_pos_and_vel_vec(pos: Vec<f64>, vel: Vec<f64>) -> Point3WithVel {
+        assert!(pos.len() == 3 && vel.len() == 3);
+        Point3WithVel {
+            x: pos[0],
+            y: pos[1],
+            z: pos[2],
+            dx: vel[0],
+            dy: vel[1],
+            dz: vel[2],
+        }
+    }
+
+    pub fn intersection_x_y(&self, other: Point3WithVel) -> Option<(f64, f64)> {
+        let m1 = self.dy / self.dx;
+        let m2 = other.dy / other.dx;
+        if (m2 - m1).abs() < f64::EPSILON {
+            return None;
+        }
+        let x = (m1 * self.x - m2 * other.x + other.y - self.y) / (m1 - m2);
+        let y = (m1 * m2 * (other.x - self.x) + m2 * self.y - m1 * other.y) / (m2 - m1);
+        Some((x, y))
+    }
+}
+
 pub struct Point3 {
     pub x: isize,
     pub y: isize,
